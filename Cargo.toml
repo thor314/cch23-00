@@ -2,8 +2,7 @@
 authors    =["Thor Kampefner <thorck@pm.me>"]
 description="""challenges for shuttle christmas code hunt 2023"""
 edition    ="2021"
-name       ="shuttle-christmas-2023"
-repository ="https://github.com/thor314/shuttle-christmas-2023"
+name       ="shuttle-cch23--1"
 version    ="0.1.0"
 
 [dependencies]
@@ -19,7 +18,7 @@ dotenvy = "0.15"
 
 axum = "0.7.3"
 shuttle-axum = "0.39.0"
-shuttle-runtime = "0.39.0"
+shuttle-runtime = { version = "0.39", default-features = false }
 
 [dev-dependencies]
 rstest    ="0.18"         # testing convenience proc-macros

@@ -11,15 +11,24 @@ mod error;
 #[cfg(test)] mod tests;
 mod utils;
 
-use axum::{routing::get, Router};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Router};
 
 async fn hello_world() -> &'static str { "Hello, world!" }
+
+async fn error_handler() -> impl IntoResponse {
+    (StatusCode::INTERNAL_SERVER_ERROR, "Internal Server Error")
+}
 
 #[shuttle_runtime::main]
 async fn axum() -> shuttle_axum::ShuttleAxum {
   utils::setup().unwrap();
 
-  let router = Router::new().route("/", get(hello_world));
+  // let router = Router::new().route("/", get(hello_world));
+
+    // Update the router with the new endpoint
+    let router = Router::new()
+        .route("/", get(hello_world))
+        .route("/-1/error", get(error_handler));
 
   Ok(router.into())
 }
