@@ -11,12 +11,15 @@ mod error;
 #[cfg(test)] mod tests;
 mod utils;
 
-use tracing::info;
+use axum::{routing::get, Router};
 
-#[tokio::main]
-async fn main() -> Result<(), MyError> {
-  utils::setup()?;
-  info!("hello thor");
+async fn hello_world() -> &'static str { "Hello, world!" }
 
-  Ok(())
+#[shuttle_runtime::main]
+async fn axum() -> shuttle_axum::ShuttleAxum {
+  utils::setup().unwrap();
+
+  let router = Router::new().route("/", get(hello_world));
+
+  Ok(router.into())
 }
