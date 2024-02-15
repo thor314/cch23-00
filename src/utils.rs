@@ -8,18 +8,10 @@ use tracing_subscriber::{
 
 use crate::error::MyError;
 /// Set up crate logging and environment variables.
-// #[tracing::instrument]
 pub(crate) fn setup() -> Result<(), MyError> {
-  dotenvy::dotenv().ok();
   let filter =
     EnvFilter::builder().with_default_directive(LevelFilter::INFO.into()).from_env_lossy();
   tracing_subscriber::fmt().with_env_filter(filter).init();
-
-  if std::env::var("DOTENV_OK").is_ok() {
-    trace!("loaded dotenv");
-  } else {
-    return Err(anyhow!("failed to load dotenv").into());
-  }
 
   Ok(())
 }
